@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SearchIcon, PlusCircleIcon, MapPinIcon, ClockIcon, CalendarIcon, MoreVerticalIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { Header } from '../components/Header';
+import { Loading } from '../components/Loading';
 import { eventAPI } from '../services/api';
 export const MyEventsPage = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -177,7 +178,9 @@ export const MyEventsPage = () => {
           </motion.div>
           <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
             {loading ? (
-              <div className="col-span-2 text-center py-8 text-gray-400">Loading events...</div>
+              <div className="col-span-2 flex items-center justify-center py-8">
+                <Loading fullScreen={false} />
+              </div>
             ) : filteredEvents.length === 0 ? (
               <div className="col-span-2 text-center py-12 my-events-empty">
                 <div className="my-events-empty-image-container mb-6">

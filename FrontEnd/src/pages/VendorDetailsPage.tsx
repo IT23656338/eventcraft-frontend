@@ -4,6 +4,7 @@ import { TabNavigation } from '../components/TabNavigation';
 import { DetailsTab } from '../components/tabs/DetailsTab';
 import { PackagesTab } from '../components/tabs/PackagesTab';
 import { ReviewsTab } from '../components/tabs/ReviewsTab';
+import { Loading } from '../components/Loading';
 import { vendorAPI } from '../services/api';
 
 export const VendorDetailsPage = () => {
@@ -43,11 +44,7 @@ export const VendorDetailsPage = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="flex flex-col min-h-screen w-full items-center justify-center bg-transparent relative">
-        <div className="text-white">Loading vendor...</div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (!vendorData || !vendorData.vendor) {

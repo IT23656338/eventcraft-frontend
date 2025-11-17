@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SearchIcon, MoreVerticalIcon, SendIcon, CheckIcon, CheckCircle2, PaperclipIcon, SmileIcon } from 'lucide-react';
 import { Header } from '../components/Header';
+import { Loading } from '../components/Loading';
 import { chatAPI, messageAPI } from '../services/api';
 
 interface Message {
@@ -57,6 +58,7 @@ export const Messages = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [messagesLoading, setMessagesLoading] = useState(false);
   const [sending, setSending] = useState(false);
   const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({});
   const [myVendorId, setMyVendorId] = useState<string | null>(null);
@@ -189,8 +191,19 @@ export const Messages = () => {
 
   // Load messages for selected conversation
   useEffect(() => {
-    const loadMessages = async () => {
+    // Clear messages when conversation changes
+    setMessages([]);
+    setMessagesLoading(false);
+    
+    if (!selectedConversation || !userId) {
+      return;
+    }
+    
+    const loadMessages = async (isInitialLoad = false) => {
       if (selectedConversation && userId) {
+        if (isInitialLoad) {
+          setMessagesLoading(true);
+        }
         try {
           const idToUse = userRole === 'VENDOR' ? await getVendorId() : userId;
           if (!idToUse) return;
@@ -218,16 +231,21 @@ export const Messages = () => {
           }
         } catch (error) {
           console.error('Error loading messages:', error);
+        } finally {
+          if (isInitialLoad) {
+            setMessagesLoading(false);
+          }
         }
       }
     };
     
-    loadMessages();
+    // Initial load with loading state
+    loadMessages(true);
     
-    // Set up polling to refresh messages every 2 seconds
+    // Set up polling to refresh messages every 2 seconds (without loading state)
     const interval = setInterval(() => {
       if (selectedConversation) {
-        loadMessages();
+        loadMessages(false);
       }
     }, 2000);
     
@@ -479,7 +497,9 @@ export const Messages = () => {
           
           <div className="flex-1 overflow-y-auto">
             {loading ? (
-              <div className="text-center py-8 text-gray-400">Loading conversations...</div>
+              <div className="flex items-center justify-center py-8">
+                <Loading fullScreen={false} />
+              </div>
             ) : conversations.length === 0 ? (
               <div className="text-center py-8 text-gray-400">
                 <p className="mb-2">No conversations yet</p>
@@ -598,7 +618,11 @@ export const Messages = () => {
                 className="flex-1 overflow-y-auto p-4 bg-transparent"
                 style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)' }}
               >
-                {messages.length === 0 ? (
+                {messagesLoading ? (
+                  <div className="flex items-center justify-center h-full">
+                    <Loading fullScreen={false} />
+                  </div>
+                ) : messages.length === 0 ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="text-center text-gray-400">
                       <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { App } from './App';
@@ -32,6 +32,7 @@ import { AdminMessagesView } from './pages/AdminMessagesView';
 import { AdminEventDetailsPage } from './pages/AdminEventDetailsPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { BackgroundAnimation } from './components/BackgroundAnimation';
+import { Loading } from './components/Loading';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import CookiePolicyPage from './pages/CookiePolicyPage';
@@ -39,6 +40,21 @@ import CookiePolicyPage from './pages/CookiePolicyPage';
 function AppRoutes() {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingKey, setLoadingKey] = useState(0);
+
+  useEffect(() => {
+    // Show loading on route change
+    setIsLoading(true);
+    setLoadingKey(prev => prev + 1);
+    
+    // Hide loading after a short delay (simulating page load)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
   
   return (
     <>
@@ -46,7 +62,10 @@ function AppRoutes() {
         orbOpacity={isLandingPage ? 60 : 30} 
         gridOpacity={isLandingPage ? 40 : 20} 
       />
-      <Routes>
+      <AnimatePresence mode="wait">
+        {isLoading && <Loading key={loadingKey} />}
+        {!isLoading && (
+          <Routes location={location} key={location.pathname}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/login" element={<Login />} />
@@ -239,7 +258,9 @@ function AppRoutes() {
               </ProtectedRoute>
             } 
           />
-        </Routes>
+          </Routes>
+        )}
+      </AnimatePresence>
     </>
   );
 }

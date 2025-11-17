@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { SearchIcon, GridIcon, ListIcon, HeartIcon, StarIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Header } from '../components/Header';
+import { Loading } from '../components/Loading';
 import { vendorAPI } from '../services/api';
 export const VendorsPage = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -145,7 +146,9 @@ export const VendorsPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {loading ? (
-              <div className="col-span-3 text-center py-8 text-gray-400">Loading vendors...</div>
+              <div className="col-span-3 flex items-center justify-center py-8">
+                <Loading fullScreen={false} />
+              </div>
             ) : filteredVendors.length === 0 ? (
               <div className="col-span-3 text-center py-8 text-gray-400">No vendors found</div>
             ) : (
@@ -194,27 +197,6 @@ export const VendorsPage = () => {
                 </div>
               </Link>
             )))}
-          </div>
-          <div className="flex justify-center items-center space-x-2 mt-8">
-            <button className="px-3 py-2 bg-gray-800 text-white rounded vendors-pagination-button">
-              &lt;
-            </button>
-            <button className="px-4 py-2 bg-purple-600 text-white rounded vendors-pagination-button vendors-pagination-active">
-              1
-            </button>
-            <button className="px-4 py-2 bg-gray-800 text-white rounded vendors-pagination-button">
-              2
-            </button>
-            <button className="px-4 py-2 bg-gray-800 text-white rounded vendors-pagination-button">
-              3
-            </button>
-            <span className="px-3 py-2 text-white">...</span>
-            <button className="px-4 py-2 bg-gray-800 text-white rounded vendors-pagination-button">
-              12
-            </button>
-            <button className="px-3 py-2 bg-gray-800 text-white rounded vendors-pagination-button">
-              &gt;
-            </button>
           </div>
         </main>
       </div>
@@ -362,20 +344,6 @@ export const VendorsPage = () => {
         }
         .vendors-card:hover .vendors-card-rating {
           transform: translateX(4px) scale(1.05);
-        }
-        .vendors-pagination-button {
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .vendors-pagination-button:hover {
-          transform: translateY(-2px) scale(1.1);
-          box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
-        }
-        .vendors-pagination-active {
-          box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-        }
-        .vendors-pagination-active:hover {
-          transform: translateY(-2px) scale(1.1);
-          box-shadow: 0 6px 16px rgba(139, 92, 246, 0.5);
         }
       `}</style>
     </div>;

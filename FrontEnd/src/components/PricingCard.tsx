@@ -10,6 +10,7 @@ interface PricingCardProps {
   popular: boolean;
   vendorId?: string;
   packageId?: string;
+  numericPrice?: number; // Add numeric price prop
 }
 
 export const PricingCard: React.FC<PricingCardProps> = ({
@@ -19,15 +20,24 @@ export const PricingCard: React.FC<PricingCardProps> = ({
   features,
   popular,
   vendorId,
-  packageId
+  packageId,
+  numericPrice
 }) => {
   const navigate = useNavigate();
 
   const handleBookNow = () => {
-    // Extract numeric price from price string (e.g., "Rs. 500" -> 500)
-    const numericPrice = price.replace(/[^0-9.]/g, '');
+    // Use numericPrice if provided, otherwise extract from price string
+    let finalPrice: string;
+    if (numericPrice !== undefined) {
+      finalPrice = numericPrice.toString();
+    } else {
+      // Extract numeric price from price string (e.g., "Rs. 5,000.00" -> "5000.00")
+      // Remove all non-numeric characters except dots and commas, then remove commas
+      const cleaned = price.replace(/[^0-9.,]/g, '').replace(/,/g, '');
+      finalPrice = cleaned;
+    }
     navigate('/contract/new', {
-      state: { vendorId, packageId, packageName: name, packagePrice: numericPrice }
+      state: { vendorId, packageId, packageName: name, packagePrice: finalPrice }
     });
   };
 

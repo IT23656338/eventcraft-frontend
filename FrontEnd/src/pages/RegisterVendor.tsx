@@ -46,23 +46,33 @@ export const RegisterVendor = () => {
               className="text-3xl font-bold text-white mb-2 register-vendor-title"
               style={{ fontFamily: '"Poppins", sans-serif' }}
             >
-              Register as a Vendor
+              <span className="inline-block register-vendor-title-word">Register</span>{' '}
+              <span className="inline-block register-vendor-title-word">as</span>{' '}
+              <span className="inline-block register-vendor-title-word">a</span>{' '}
+              <span className="inline-block register-vendor-title-word">Vendor</span>
             </h1>
             <p className="text-gray-400 mb-8 register-vendor-subtitle">
-              Fill out the form below to apply to become a vendor.
+              <span className="inline-block register-vendor-subtitle-phrase">Fill out the form below</span>{' '}
+              <span className="inline-block register-vendor-subtitle-phrase">to apply to become a vendor.</span>
             </p>
             <form className="space-y-6">
               <div className="register-vendor-field-group">
-                <label className="block text-white mb-2 register-vendor-label">Company Name</label>
+                <label className="block text-white mb-2 register-vendor-label">
+                  Company Name <span className="text-red-400">*</span>
+                </label>
                 <input type="text" placeholder="Enter your company name" className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 register-vendor-input" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="register-vendor-field-group">
-                  <label className="block text-white mb-2 register-vendor-label">Service Type</label>
-                  <input type="text" placeholder="e.g., Catering, Photography" className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 register-vendor-input" />
+                  <label className="block text-white mb-2 register-vendor-label">
+                    Service Type <span className="text-red-400">*</span>
+                  </label>
+                  <input type="text" placeholder="e.g., Catering, Photography, DJ Services" className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 register-vendor-input" />
                 </div>
                 <div className="register-vendor-field-group">
-                  <label className="block text-white mb-2 register-vendor-label">Address</label>
+                  <label className="block text-white mb-2 register-vendor-label">
+                    Address <span className="text-red-400">*</span>
+                  </label>
                   <input type="text" placeholder="Enter your business address" className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 register-vendor-input" />
                 </div>
               </div>
@@ -81,8 +91,10 @@ export const RegisterVendor = () => {
                 </div>
               </div>
               <div className="register-vendor-field-group">
-                <label className="block text-white mb-2 register-vendor-label">Details</label>
-                <textarea rows={6} placeholder="Describe your services in detail" className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 register-vendor-textarea"></textarea>
+                <label className="block text-white mb-2 register-vendor-label">
+                  Details
+                </label>
+                <textarea rows={6} placeholder="Describe your services in detail. Include your experience, specialties, and what makes your service unique." className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 register-vendor-textarea"></textarea>
               </div>
               <div className="flex justify-end">
                 <button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white py-3 px-8 rounded-lg font-medium register-vendor-submit-button">
@@ -161,51 +173,68 @@ export const RegisterVendor = () => {
         .register-vendor-title {
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .register-vendor-form-container:hover .register-vendor-title {
-          transform: translateX(10px);
+        .register-vendor-title-word {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          display: inline-block;
+          cursor: default;
+        }
+        .register-vendor-title-word:hover {
+          transform: translateY(-4px) scale(1.1) rotate(2deg);
           color: #a78bfa;
+          text-shadow: 0 6px 20px rgba(139, 92, 246, 0.4), 0 0 16px rgba(139, 92, 246, 0.3);
         }
         
         /* Subtitle */
         .register-vendor-subtitle {
           transition: all 0.3s ease;
         }
-        .register-vendor-form-container:hover .register-vendor-subtitle {
+        .register-vendor-subtitle-phrase {
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          display: inline-block;
+          cursor: default;
+        }
+        .register-vendor-subtitle-phrase:hover {
+          transform: translateY(-2px) scale(1.05);
           color: #c4b5fd;
+          background: rgba(139, 92, 246, 0.1);
+          padding: 2px 4px;
+          border-radius: 4px;
         }
         
         /* Form Fields */
         .register-vendor-field-group {
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .register-vendor-form-container:hover .register-vendor-field-group {
+        .register-vendor-field-group:hover {
           transform: translateX(5px);
         }
         .register-vendor-label {
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .register-vendor-field-group:hover .register-vendor-label {
           color: #a78bfa;
+          transform: translateX(4px);
         }
         .register-vendor-input,
         .register-vendor-textarea {
           transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .register-vendor-input:hover,
-        .register-vendor-textarea:hover {
+        .register-vendor-input:hover:not(:focus),
+        .register-vendor-textarea:hover:not(:focus) {
           transform: translateY(-2px);
-          border-color: #a78bfa;
+          border-color: rgba(139, 92, 246, 0.5);
+          box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
         }
         .register-vendor-input:focus,
         .register-vendor-textarea:focus {
-          transform: translateY(-2px);
+          transform: translateY(-3px);
           border-color: #a78bfa;
-          box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+          box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3), 0 0 0 2px rgba(139, 92, 246, 0.5);
         }
         
         /* Submit Button */
         .register-vendor-submit-button {
-          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
           position: relative;
           overflow: hidden;
         }
@@ -217,14 +246,17 @@ export const RegisterVendor = () => {
           width: 100%;
           height: 100%;
           background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.5s;
+          transition: left 0.5s ease;
         }
         .register-vendor-submit-button:hover::before {
           left: 100%;
         }
         .register-vendor-submit-button:hover {
-          transform: translateY(-2px) scale(1.05);
-          box-shadow: 0 4px 16px rgba(139, 92, 246, 0.5);
+          transform: translateY(-3px) scale(1.05) rotate(1deg);
+          box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4), 0 0 16px rgba(139, 92, 246, 0.3);
+        }
+        .register-vendor-submit-button:active {
+          transform: translateY(-1px) scale(1.02);
         }
       `}</style>
     </div>;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Header } from '../components/Header';
+import { Loading } from '../components/Loading';
 import {
   BellRingIcon,
   TrophyIcon,
@@ -239,16 +240,7 @@ export function NotificationsPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex flex-col min-h-screen bg-transparent w-full relative">
-        <Header />
-        <main className="p-8">
-          <div className="text-center py-16">
-            <div className="text-white">Loading notifications...</div>
-          </div>
-        </main>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
 import { StatsCard } from '../components/StatsCard';
+import { Loading } from '../components/Loading';
 import { MapPinIcon, MoreVerticalIcon, TicketIcon, TrophyIcon, BellRingIcon, StarIcon, ArrowRightIcon, HeartIcon, FileTextIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { eventAPI, vendorAPI, chatAPI, userAPI, contractAPI } from '../services/api';
@@ -130,9 +131,7 @@ export const UserDashboard = () => {
     }
   };
   if (loading) {
-    return <div className="flex min-h-screen bg-transparent w-full items-center justify-center relative">
-      <div className="text-white">Loading...</div>
-    </div>;
+    return <Loading />;
   }
 
   return <div className="flex flex-col min-h-screen bg-transparent w-full relative">

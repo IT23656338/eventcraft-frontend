@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BellIcon, UserCircleIcon, MessageCircleIcon } from 'lucide-react';
 import { notificationAPI } from '../services/api';
 
 export const Header = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const [unreadCount, setUnreadCount] = useState(0);
 
@@ -16,7 +15,9 @@ export const Header = () => {
           const data = await notificationAPI.getUnreadCount(userId);
           setUnreadCount((data as any).count || 0);
         } catch (error) {
-          console.error('Error loading unread count:', error);
+          if (import.meta.env.DEV) {
+            console.error('Error loading unread count:', error);
+          }
         }
       }
     };
@@ -27,12 +28,6 @@ export const Header = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleProfileClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    navigate('/profile');
-  };
-
   const isActive = (path: string) => {
     if (path === '/dashboard') {
       return location.pathname === '/dashboard';
@@ -41,10 +36,12 @@ export const Header = () => {
   };
 
   const isMessagesPage = location.pathname.startsWith('/messages');
+  const isVendorsPage = location.pathname.startsWith('/vendors');
+  const isProfilePage = location.pathname.startsWith('/profile');
 
   return (
     <>
-      <header className={`flex items-center justify-between px-6 py-4 header-container ${isMessagesPage ? 'bg-[#0a0a0f] border-b border-gray-800' : 'bg-transparent backdrop-blur-sm'}`}>
+      <header className={`flex items-center justify-between px-6 py-4 header-container ${isMessagesPage || isVendorsPage || isProfilePage ? 'bg-[#0a0a0f] border-b border-gray-800' : 'bg-transparent backdrop-blur-sm'}`}>
         <Link to="/" className="flex items-center header-logo-link">
           <img src="/LOGO.png" alt="EventCraft Logo" className="h-12 w-auto header-logo" />
         </Link>
@@ -94,14 +91,13 @@ export const Header = () => {
               </span>
             )}
           </Link>
-          <button 
-            type="button"
-            onClick={handleProfileClick}
+          <Link 
+            to="/profile" 
             className="w-8 h-8 rounded-full bg-[#e8c4a3] flex items-center justify-center text-white cursor-pointer header-profile-button"
             title="Profile"
           >
             <UserCircleIcon size={20} className="text-white" />
-          </button>
+          </Link>
         </div>
       </header>
       <style>{`
