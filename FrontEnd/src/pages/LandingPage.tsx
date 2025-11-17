@@ -300,15 +300,15 @@ export const LandingPage = () => {
         />
 
         {/* Hero Content */}
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 z-10 relative pb-12 sm:pb-16 md:pb-24" style={{ paddingTop: '80px' }}>
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 z-10 relative pb-12 sm:pb-16 md:pb-24" style={{ paddingTop: '60px' }}>
           <div className="max-w-4xl mx-auto text-center">
             {/* Animated Logo */}
-            <div className="mb-4 sm:mb-6 flex justify-center">
+            <div className="mb-4 sm:mb-6 flex justify-center -mt-4 sm:-mt-6">
               <div className="logo-interactive-container">
                 <img 
                   src="/LOGO.png" 
                   alt="EventCraft Logo" 
-                  className="h-32 sm:h-40 md:h-56 lg:h-80 w-auto logo-interactive" 
+                  className="h-24 sm:h-32 md:h-40 lg:h-56 w-auto logo-interactive" 
                   style={{
                     animation: 'logoFloat 3s ease-in-out infinite, logoFadeIn 2s ease-out'
                   }}
